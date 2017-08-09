@@ -1,0 +1,157 @@
+"use strict";
+(function() {
+
+	document.addEventListener('pageInit', function(e) {
+		console.log(e.detail.page);
+		var page = e.detail.page;
+		if (page.name === 'rosyCheckout') {
+			console.log("pageInit1");
+			
+			$('#confirmMessage').hide();				
+			
+			orderId = getURLParameter("ro");
+		
+			var postData1 = new Object();
+			postData1.id = orderId;
+			postData2 = JSON.stringify(postData1);
+			
+			$
+					.ajax({
+						type : 'POST',
+						url : 'https://tn59sjpc9c.execute-api.us-east-1.amazonaws.com/dev/api/rosyorder',
+						data : postData2, // or JSON.stringify ({name:
+											// 'jonas'}),
+						success : function(data) {
+							// alert('data: ' + data);
+							console.log(data);
+							console.log('successful call:');
+							// console.log(data);
+							jsonData = JSON.parse(data);
+							console.log(jsonData)
+							loadRosyOrderData(jsonData);
+							
+							
+							//now autoclick the checkout button to take you to checkout
+							//cannot do it!! cannot access iframe content from javascript because it's all hosted on paypal servers.  
+							//imagine getting the username /passworrd field, you can't do it.  user must click the pay now button.
+							
+							//if order is paid, display paid confirmation
+							if(jsonData.rosyOrderStatus=='PAID' || jsonData.rosyOrderStatus=='FULFILLED' ){
+								$('#confirmMessage').show();
+								$('#confirmMessage').text('THANKS! YOUR ORDER # is ' + jsonData.rosyOrderId + '. YOU WILL RECEIVE A TEXT CONFIRMATION SHORTLY');
+								var form = document.getElementById("rosyOrder");
+								var elements = form.elements;
+								for (var i = 0, len = elements.length; i < len; ++i) {
+								    elements[i].readOnly = true;
+								    elements[i].disabled = true;
+								}
+								$('#rosyClickableArea').hide();
+							}
+							
+							
+						},
+					  error: function (response) {
+				           //Handle error
+							$('#confirmMessage').show();
+							$('#confirmMessage').text('ROSY HAD A PROBLEM RETRIEVING YOUR ORDER, PLEASE TRY AGAIN.');
+							var form = document.getElementById("rosyOrder");
+							var elements = form.elements;
+							for (var i = 0, len = elements.length; i < len; ++i) {
+							    elements[i].readOnly = true;
+							    elements[i].disabled = true;
+							}
+							$('#rosyClickableArea').hide();
+				           
+
+				    }           ,
+						contentType : "application/json",
+						dataType : 'json'
+					});
+
+		
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		}
+	});
+
+	/* =============================================== */
+	/* APP INIT */
+	/* =============================================== */
+	var myApp = new Framework7({
+		material : true,
+		swipePanel : 'left',
+		modalTitle : 'RosyBot',
+		showBarsOnPageScrollEnd : false
+	});
+
+	/* =============================================== */
+	/* EXPORT SELECTORS ENGINE */
+	/* =============================================== */
+	var $$ = Dom7;
+
+	/* =============================================== */
+	/* ADD VIEW */
+	/* =============================================== */
+
+	var mainView = myApp.addView('.view-main', {
+		dynamicNavbar : true
+	});
+
+	/* ================================================================== */
+	/* PAGE INIT : HERE, YOU CAN WRITE YOUR CUSTOM JAVASCRIPT/JQUERY */
+	/* ================================================================== */
+
+	$$(document).on('pageInit', function(e) {
+		e.preventDefault();
+console.log("page Init");
+		/*
+		 * CALENDAR ================================
+		 */
+		// var monthNames = ['January', 'February', 'March', 'April', 'May',
+		// 'June', 'July', 'August' , 'September' , 'October', 'November',
+		// 'December'];
+		// 
+		// var calendarInline = myApp.calendar({
+		// container: '#calendar-inline-container',
+		// value: [new Date()],
+		// weekHeader: false,
+		// toolbarTemplate:
+		// '<div class="toolbar calendar-custom-toolbar">' +
+		// '<div class="toolbar-inner">' +
+		// '<div class="left">' +
+		// '<a href="#" class="link icon-only"><i class="icon
+		// icon-back"></i></a>' +
+		// '</div>' +
+		// '<div class="center"></div>' +
+		// '<div class="right">' +
+		// '<a href="#" class="link icon-only"><i class="icon
+		// icon-forward"></i></a>' +
+		// '</div>' +
+		// '</div>' +
+		// '</div>',
+		// onOpen: function (p) {
+		// $$('.calendar-custom-toolbar
+		// .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
+		// $$('.calendar-custom-toolbar .left .link').on('click', function () {
+		// calendarInline.prevMonth();
+		// });
+		// $$('.calendar-custom-toolbar .right .link').on('click', function () {
+		// calendarInline.nextMonth();
+		// });
+		// },
+		// onMonthYearChangeStart: function (p) {
+		// $$('.calendar-custom-toolbar
+		// .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
+		// }
+		// });
+
+	});
+
+})();

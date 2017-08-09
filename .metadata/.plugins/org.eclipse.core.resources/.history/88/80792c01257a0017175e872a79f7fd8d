@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="rosybot checkout">
+<meta name="author" content="MCOLEMAN">
+
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="apple-touch-icon" href="/favicon.ico" />
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="shortcut icon" sizes="196x196" href="/favicon.ico">
+<link rel="shortcut icon" sizes="128x128" href="/favicon.ico">
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<link rel="apple-touch-icon" href="/favicon.ico" type="image/x-icon" />
+
+
+
+
+
+
+
+
+<title>ROSYBOT</title>
+
+<!-- Bootstrap Core CSS -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/rosybot.css" rel="stylesheet">
+
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+
+</head>
+<body>
+
+	<!-- Navigation -->
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#page-top"><img height=30px
+				width=30px src="images/robot2.png"></a> <a class="navbar-brand"
+				href="#page-top">ROSYBOT - CHECKOUT</a>
+		</div>
+	</nav>
+	<div class="container">
+
+
+
+			<div id="confirmMessage"></div>
+			<form id="rosyOrder">
+				<input id="id" name="id" type="hidden" />
+
+				<h4>My Info</h4>
+				<!-- full-name input-->
+				<div class="form-group row">
+					<input class="col-xs-12" id="customerFullName"
+						name="customerFullName" type="text" placeholder="my name"
+						class="input-xlarge" onblur="updateRosyOrder()">
+				</div>
+				<div class="form-group row">
+					<input class="col-xs-12" id="customerPhone" name="customerPhone"
+						type="text" placeholder="my phone" class="input-xlarge"
+						onblur="updateRosyOrder()">
+
+
+				</div>
+				<div class="form-group row">
+					<input class="col-xs-12" id="customerEmail" name="customerEmail"
+						type="text" placeholder="my email" class="input-xlarge"
+						onblur="updateRosyOrder()">
+
+				</div>
+
+				<!-- Address form -->
+				<h4>Delivery Address</h4>
+				<!-- full-name input-->
+				<div class="form-group row">
+					<input class="col-xs-12" id="recipientFullName"
+						name="recipientFullName" type="text"
+						placeholder="Full Name of recipient" class="input-xlarge"
+						onblur="updateRosyOrder()">
+
+				</div>
+				<!-- full-name input-->
+				<div class="form-group row">
+					<input class="col-xs-12" id="recipientPhone" name="recipientPhone"
+						type="text" placeholder="recipient phone" class="input-xlarge"
+						onblur="updateRosyOrder()">
+
+
+				</div>
+				<!-- address-line1 input-->
+				<div class="form-group row">
+					<input class="col-xs-12" id="recipientStreetAddress1"
+						name="recipientStreetAddress1" type="text"
+						placeholder="Street Address, P.O. Box, Company Name, c/o"
+						class="input-xlarge" onblur="updateRosyOrder()">
+
+				</div>
+				<!-- address-line2 input-->
+				<div class="form-group row">
+					<input class="col-xs-12" id="recipientStreetAddress2"
+						name="recipientStreetAddress2" type="text"
+						placeholder="Apartment, Suite , Unit, Building, Floor, etc"
+						class="input-xlarge" onblur="updateRosyOrder()">
+
+				</div>
+				<!-- city input-->
+				<div class="form-group row">
+					<input class="col-xs-12" id="recipientCity" name="recipientCity"
+						type="text" placeholder="City" class="input-xlarge"
+						onblur="updateRosyOrder()">
+
+				</div>
+				<!-- region input-->
+				<div class="form-group row">
+					<input class="col-xs-12" id="recipientState" name="recipientState"
+						type="text" placeholder="State / Province / Region"
+						class="input-xlarge" onblur="updateRosyOrder()">
+
+				</div>
+				<!-- postal-code input-->
+				<div class="form-group row">
+					<input class="col-xs-6" id="recipientPostalCode"
+						name="recipientPostalCode" type="text"
+						placeholder="Zip or Postal Code" class="input-xlarge"
+						onblur="updateRosyOrder()">
+
+				</div>
+				<!-- country select -->
+				<div class="form-group row">
+					<select disabled class="col-xs-12" id="recipientCountry"
+						name="recipientCountry" class="input-xlarge">
+						<option value="US">USA</option>
+					</select>
+
+				</div>
+				<h4>Order Info</h4>
+				<div class="form-group row">
+					<label for="deliveryDate">Delivery Date</label> <input
+						class="col-xs-12" id="deliveryDate" name="deliveryDate"
+						type="text" placeholder="delivery date" class="input-xlarge"
+						onblur="updateRosyOrder()">
+
+				</div>
+
+				<div class="form-group row">
+					<label for="cardMessage">Card Message</label> <input
+						class="col-xs-12" id="cardMessage" name="cardMessage" type="text"
+						placeholder="card message" class="input-xlarge"
+						onblur="updateRosyOrder()">
+
+				</div>
+				<div>
+					<img id="rosyOrderImage" src="">
+				</div>
+				<div class="row">&nbsp;</div>
+
+				<div class="form-group row">
+					<div class="col-xs-12 h4" id="productName"></div>
+				</div>
+				<div class="form-group row">
+					<div class="col-xs-12" id="productCode"></div>
+				</div>
+
+				<div class="form-group row">
+					<div class="col-xs-3 h4">Total:</div>
+					<div class="col-xs-3 h4" id="orderTotal"></div>
+				</div>
+
+			</form>
+		</div>
+	<nav class="navbar navbar-default navbar-fixed-bottom">
+
+
+		<div id="rosyClickableArea">
+			<div id="paypal-button-container"></div>
+
+			<script>
+				paypal.Button
+						.render(
+								{
+
+									env : 'sandbox', // sandbox | production
+
+									style : {
+										size : 'responsive',
+										color : 'blue',
+										shape : 'rect',
+										label : 'buynow',
+										branding : true
+									},
+									// PayPal Client IDs - replace with your own
+									// Create a PayPal app: https://developer.paypal.com/developer/applications/create
+									client : {
+										//sandbox : 'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R',
+										sandbox : 'AekRwVJ1agXW4o00ZIPq7Mb4KY5My7uvBnlCJc6L-JI6lGbxzulA8ZNK2wglI768X7ATxVgjGkQBNji6'
+									//production : '<insert production client id>'
+									},
+									// Show the buyer a 'Pay Now' button in the checkout flow
+									commit : true,
+
+									// payment() is called when the button is clicked
+									payment : function(data, actions) {
+										//update rosy order here
+										var postData1 = new Object();
+										postData1.id = getURLParameter("ro");
+										postData2 = JSON.stringify(postData1);
+										// maybe json stringify this oject to get it to post without
+										// the = sign ???
+										$
+												.ajax({
+													type : 'POST',
+													url : 'https://tn59sjpc9c.execute-api.us-east-1.amazonaws.com/dev/api/rosyorder',
+													data : postData2, // or JSON.stringify ({name:
+													async : false,
+													success : function(data) {
+														jsonData = JSON
+																.parse(data);
+														total = jsonData.orderTotal;
+														productCode = jsonData.productCode;
+														productName = jsonData.productName;
+														imageUrl = jsonData.productImageUrl;
+														console.log('image:'
+																+ imageUrl);
+													},
+													contentType : "application/json",
+													dataType : 'json'
+												});
+
+										return actions.payment
+												.create({
+													payment : {
+														transactions : [ {
+															amount : {
+																total : total,
+																currency : 'USD'
+
+															},
+															item_list : {
+																items : [ {
+																	name : productCode,
+																	description : productName,
+																	currency : 'USD',
+																	price : total,
+																	quantity : 1
+																} ]
+															}
+														}
+
+														],
+														note_to_payer : 'Rosy will send you a text confirmation after checkout.'
+													},
+													experience : {
+														name : 'RosyTheBot.com',
+														presentation : {
+															brand_name : 'RosyTheBot.com',
+															// logo_image : (need an https server to host this image) 'http://www.rosythebot.com/images/robot2.png',
+															locale_code : 'US'
+														},
+														input_fields : {
+															no_shipping : 1
+														}
+													}
+												});
+									},
+
+									// onAuthorize() is called when the buyer approves the payment
+									onAuthorize : function(data, actions) {
+										console.log("authorization complete");
+										console.log(data);
+										var rosyPayId = data.paymentID;
+										console.log
+										// Make a call to the REST api to execute the payment
+										return actions.payment
+												.execute()
+												.then(
+														function() {
+															console
+																	.log("execute payment complete");
+															//update rosyOrder in database after paypal called successfully
+															console
+																	.log(rosyPayId);
+
+															var postData1 = new Object();
+															postData1.id = getURLParameter("ro");
+															postData1.paymentId = rosyPayId;
+															postData1.rosyOrderStatus = "PAID";
+
+															postData2 = JSON
+																	.stringify(postData1);
+															// maybe json stringify this oject to get it to post without
+															// the = sign ???
+															$
+																	.ajax({
+																		type : 'POST',
+																		url : 'https://tn59sjpc9c.execute-api.us-east-1.amazonaws.com/dev/api/rosyorder',
+																		data : postData2, // or JSON.stringify ({name:
+																		async : false,
+																		success : function(
+																				data) {
+
+																			jsonData = JSON
+																					.parse(data);
+																			var rosyOrderId = jsonData.rosyOrderId;
+																		},
+																		contentType : "application/json",
+																		dataType : 'json'
+																	});
+
+															window.location
+																	.replace("http://rosythebot.com?ro="
+																			+ postData1.id);
+
+														});
+									}
+
+								}, '#paypal-button-container');
+			</script>
+		</div>
+		<!-- /.container -->
+	</nav>
+
+
+
+
+	<!-- jQuery -->
+	<script src="js/jquery.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="js/bootstrap.min.js"></script>
+
+
+	<script type="text/javascript" src="js/cart.js"></script>
+
+</body>
+<div id="rosySpinnerOverlay" class="modal"></div>
+</html>

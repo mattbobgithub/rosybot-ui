@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy 1 elements(s) to &apos;rosybot-ui&apos;&#x0D;&#x0A;- Original project: &apos;rosythebot-ui-cart&apos;&#x0D;&#x0A;- Destination element: &apos;rosybot-ui&apos;&#x0D;&#x0A;- Original element: &apos;favicon.ico&apos;" description="Copy file" element1="favicon.ico" files="1" flags="589830" folders="0" id="org.eclipse.wst.jsdt.ui.copy" log="favicon.ico&#x09;true&#x09;false" policy="org.eclipse.wst.jsdt.ui.copyResources" stamp="1501958639423" target="/rosybot-ui" units="0" version="1.0"/>
+</session>
