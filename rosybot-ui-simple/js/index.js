@@ -1,0 +1,120 @@
+$(document)
+		.ready(
+				function() {
+				
+					
+					var welcomeMessage = "Enter	your # and I'll text you when I launch";
+					
+					$('#welcomeMessage').text(welcomeMessage);
+					
+					//hide submit button until phone number input is valid
+					$('#rosy_customer_subscribe_button').attr('disabled','disabled');
+					
+				
+				});
+
+
+
+
+
+function changePhoneNumber(data){
+	var phoneNum = data.value;
+	phoneNum = phoneNum.replace(/\D/g,'');
+	console.log("phone change:" + phoneNum);
+	if(phoneNum.length>=10){
+		console.log("phone valid");
+		$('#rosy_customer_subscribe_button').removeAttr('disabled');
+		
+     
+		
+	}else{
+		console.log("phone INvalid");
+	}
+	
+	
+}
+
+$('#rosy_custobmer_subscribe_form').submit(function(e){
+	//
+//	        // Stop form submission & check the validation
+	        e.preventDefault();
+        var phoneNum = $('#customerPhone').val();
+	        console.log(phoneNum);
+	        
+	        $('#welcomeMessage').css({'color':'red', 'font-size': '150%' });
+	    	$('#welcomeMessage').text('THANKS! Rosy will text you when she launches');
+	    	
+	    	
+	    	
+	    	$.ajax({
+	    				type : 'POST',
+	    				url : 'https://a61pwasdn9.execute-api.us-east-1.amazonaws.com/custApiStage1/api/rosycustomer',
+	    				data : JSON.stringify ({customerPhone: phoneNum}),
+	    				success : function(data) {
+	    					console.log('successful update customer:' + data);
+	    					$('#welcomeMessage').text('THANKS! Rosy will text you when we launch');
+	    					
+	    			
+	    					//display message
+	    				},
+	    				 error: function(data) {
+	    				       console.log("error on subscribe rosy." + data);
+	    				       $('#welcomeMessage').text('Oops, Rosy had a problem, please try later');
+	    				   	
+	    				    },
+	    				contentType : "application/json",
+	    				dataType : 'json'
+	    			});
+	    		    	 
+	    	 
+
+			$("#rosy_custobmer_subscribe_form :input").attr("disabled", true);
+	    	
+	    	//return false to prevent page reload
+	    	 return false;
+	        
+});
+
+
+
+
+
+
+
+
+Array.prototype.move = function(from, to) {
+	this.splice(to, 0, this.splice(from, 1)[0]);
+};
+
+function objectifyForm(formArray) {// serialize data function
+
+	var returnArray = {};
+	for (var i = 0; i < formArray.length; i++) {
+		
+		//find delivery date
+		returnArray[formArray[i]['name']] = formArray[i]['value'];
+	}
+	return returnArray;
+}
+
+function objectifyForm(formArray) {// serialize data function
+
+	var returnArray = {};
+	for (var i = 0; i < formArray.length; i++) {
+		
+		//find delivery date
+		returnArray[formArray[i]['name']] = formArray[i]['value'];
+	}
+	return returnArray;
+}
+
+
+function convertPhoneForSave(phone){
+	phone = phone.replace(/\D/g,'');
+	phone = '1'+phone;
+	return phone;
+}
+
+
+
+

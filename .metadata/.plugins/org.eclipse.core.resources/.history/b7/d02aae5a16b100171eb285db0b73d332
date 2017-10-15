@@ -1,0 +1,275 @@
+/**
+ * intiate the cart with the order from the api
+ */
+
+$(document)
+		.ready(
+				function() {
+
+					$('#confirmMessage').hide();
+
+					orderId = getURLParameter("ro");
+					console.log(orderId);
+					var postData1 = new Object();
+					postData1.id = orderId;
+					postData2 = JSON.stringify(postData1);
+					
+
+					$
+							.ajax({
+								type : 'POST',
+								url : 'https://tn59sjpc9c.execute-api.us-east-1.amazonaws.com/dev/api/rosyorder',
+								data : postData2,
+								success : function(data) {
+
+									console.log(data);
+
+									jsonData = JSON.parse(data);
+									$('#payButton').html("Pay $" + jsonData.orderTotal);
+								
+									if (jsonData.rosyOrderStatus == 'PAID'
+										|| jsonData.rosyOrderStatus == 'FULFILLED') {
+									
+
+									
+									$('#rosyClickableArea').hide();
+									
+									var url = document.URL;
+								    shortUrl=url.substring(0,url.lastIndexOf("/"));
+									
+								location= shortUrl + "/checkout.html?ro=" + getURLParameter("ro");
+									
+								}
+									
+							
+
+										},
+										error : function(response) {
+
+											// Handle error
+											$('#confirmMessage').show();
+											$('#confirmMessage')
+													.text(
+															'ROSY HAD A PROBLEM RETRIEVING YOUR ORDER, PLEASE TRY AGAIN.');
+
+											$('#rosyClickableArea').hide();
+								
+
+										},
+										contentType : "application/json",
+										dataType : 'json'
+									});
+							
+
+								
+
+				});
+
+
+
+	  function checkForm(form)
+	  {
+	    //
+	    // validate form fields
+	    //
+
+	    form.myButton.disabled = true;
+	    return true;
+	  }
+
+
+function formatPhoneNumber(s) {
+  var s2 = (""+s).replace(/\D/g, '');
+	  var output;
+	  if(s2.length>=10){
+		s2 = s2.substr(0,10);
+	  var m = s2.match(/^(\d{3})(\d{3})(\d{4})$/);
+	  output = m[1] + "-" + m[2] + "-" + m[3];
+	  }else{
+		  output = s;
+	  }
+
+	   return output;
+	}
+
+
+
+
+Array.prototype.move = function(from, to) {
+	this.splice(to, 0, this.splice(from, 1)[0]);
+};
+
+function objectifyForm(formArray) {// serialize data function
+
+	var returnArray = {};
+	for (var i = 0; i < formArray.length; i++) {
+
+		// find delivery date
+		returnArray[formArray[i]['name']] = formArray[i]['value'];
+	}
+	return returnArray;
+}
+
+function getURLParameter(name) {
+	return decodeURIComponent((new RegExp('[?|&]' + name + '='
+			+ '([^&;]+?)(&|#|;|$)').exec(location.search) || [ null, '' ])[1]
+			.replace(/\+/g, '%20'))
+			|| null;
+}
+
+
+
+function convertPhoneForDisplay(phone) {
+	if (phone.charAt(0) === '1') {
+		phone = phone.substr(1);
+	}
+	return phone.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
+}
+
+function convertPhoneForSave(phone) {
+	phone = phone.replace(/\D/g, '')
+
+	return phone;
+}
+
+var stripe = Stripe('pk_test_W2fKI1ypiVB8Lk8jH6Rv2bWY');
+var elements = stripe.elements();
+
+
+var card = elements.create('card', {
+	  style: {
+	    base: {
+	      iconColor: '#666EE8',
+	      color: '#31325F',
+	      lineHeight: '40px',
+	      fontWeight: 300,
+	      fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+	      fontSize: '15px',
+
+	      '::placeholder': {
+	        color: '#CFD7E0',
+	      },
+	    },
+	  }
+	});
+
+	card.mount('#card-element');
+
+	var inputs = document.getElementById("cardPaymentForm").querySelectorAll('input.field');
+	Array.prototype.forEach.call(inputs, function(input) {
+		  input.addEventListener('focus', function() {
+		    input.classList.add('is-focused');
+		  });
+		  input.addEventListener('blur', function() {
+		    input.classList.remove('is-focused');
+		  });
+		  input.addEventListener('keyup', function() {
+		    if (input.value.length === 0) {
+		      input.classList.add('is-empty');
+		    } else {
+		      input.classList.remove('is-empty');
+		    }
+		  });
+		});
+
+
+
+
+function setOutcome(result) {
+  var successElement = document.getElementById("cardPaymentForm").querySelector('.success');
+  var errorElement = document.getElementById("cardPaymentForm").querySelector('.error');
+  successElement.classList.remove('visible');
+  errorElement.classList.remove('visible');
+
+  if (result.token) {
+    // Use the token to create a charge or a customer
+    // https://stripe.com/docs/charges
+   // successElement.querySelector('.token').textContent = result.token.id;
+	    $('#rosyClickableArea').hide();
+    successElement.classList.add('visible');
+
+    
+    //call back to server with token.  
+   apiUrl= "https://h83jr170h1.execute-api.us-east-1.amazonaws.com/stripeDevApi/api/rosyorder";
+   
+  ro = getURLParameter("ro");
+   
+   console.log(result.token.id);
+   
+   
+   var postData = {
+		   ro : ro,
+		   tok : result.token.id
+   }
+   
+	jsonPostData = JSON.stringify(postData);
+	
+
+	$
+			.ajax({
+				type : 'POST',
+				url : apiUrl,
+				data : jsonPostData,
+				success : function(data) {
+
+					console.log(data);
+					var url = document.URL;
+				    shortUrl=url.substring(0,url.lastIndexOf("/"));
+					
+				location= shortUrl + "/checkout.html?ro=" + getURLParameter("ro");
+				//	jsonData = JSON.parse(data);
+				//	$('#payButton').html("Pay $" + jsonData.orderTotal);
+				
+					// if order is paid, display paid send back to confirmation and black all fields
+				
+//					if (jsonData.rosyOrderStatus == 'PAID') {
+//						var form = document
+//						.getElementById("cardPaymentForm");
+//				var elements = form.elements;
+//				for (var i = 0, len = elements.length; i < len; ++i) {
+//					elements[i].readOnly = true;
+//					elements[i].disabled = true;
+//				}
+//					}
+
+				},
+				error : function(response) {
+
+					//redirect somewhere??
+					
+					// Handle error
+					$('#confirmMessage').show();
+					$('#confirmMessage')
+							.text(
+									'ROSY HAD A PROBLEM PROCESSING YOUR ORDER, PLEASE TRY AGAIN.');
+			
+		
+
+				},
+				contentType : "application/json",
+				dataType : 'json'
+			});
+
+  
+   
+  } else if (result.error) {
+    errorElement.textContent = result.error.message;
+    errorElement.classList.add('visible');
+  }
+}
+
+card.on('change', function(event) {
+  setOutcome(event);
+});
+
+document.getElementById("cardPaymentForm").addEventListener('submit', function(e) {
+  e.preventDefault();
+  var form = document.getElementById("cardPaymentForm");
+  var extraDetails = {
+    name: form.querySelector('input[name=cardholder-name]').value,
+  };
+  stripe.createToken(card, extraDetails).then(setOutcome);
+});
+/**
+ * http://usejsdoc.org/
+ */

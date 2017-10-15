@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;rosybot-ui-simple/index.html&apos; to &apos;index_old.html&apos;" description="Rename resource &apos;index.html&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="index.html" name="index_old.html" stamp="1504144850490" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;rosybot-ui-simple/index-hero-subscribe.html&apos; to &apos;index.html&apos;" description="Rename resource &apos;index-hero-subscribe.html&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="index-hero-subscribe.html" name="index.html" stamp="1504144860268" updateReferences="true"/>
+</session>

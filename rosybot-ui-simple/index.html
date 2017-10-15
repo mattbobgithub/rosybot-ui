@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="">
+
+
+<title>ROSYBOT</title>
+
+<!-- CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+	href="https://fonts.googleapis.com/css?family=Droid+Serif:400,400italic|Montserrat:700,400|Varela+Round">
+
+<!-- Font Icon -->
+<link rel="stylesheet" href="fonts/icomoon/icomoon.css">
+
+<!-- Swipebox -->
+<link rel="stylesheet" href="css/swipebox.css">
+
+<!-- Animate CSS -->
+<link rel="stylesheet" href="css/animate.min.css">
+
+<!-- Custom CSS -->
+<link rel="stylesheet" href="css/style-v2.css">
+<link rel="stylesheet" href="css/style-responsive-v2.css">
+<link rel="stylesheet" href="css/expandableGallery.css">
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+	      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	    <![endif]-->
+<script src="js/modernizr.js"></script>
+<!-- Modernizr -->
+
+<!-- FAV AND TOUCH ICONS -->
+<link rel="shortcut icon" href="favicon.png">
+
+<link rel="icon" type="image/png" href="favicon.png">
+
+<!-- For iPad with high-resolution Retina display running iOS ≥ 7: -->
+<link rel="apple-touch-icon-precomposed" sizes="152x152"
+	href="favicon.png">
+
+<!-- For iPad with high-resolution Retina display running iOS ≤ 6: -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144"
+	href="favicon.png">
+
+<!-- For iPhone with high-resolution Retina display running iOS ≥ 7: -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114"
+	href="favicon.png">
+
+<!-- For iPad and iPad mini models with a 1× display -->
+<link rel="apple-touch-icon-precomposed" sizes="76x76"
+	href="favicon.png">
+
+<!-- For first- and second-generation iPad: -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72"
+	href="favicon.png">
+
+<!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+<link rel="apple-touch-icon-precomposed" href="favicon.png">
+
+
+</head>
+
+<body>
+
+	<!--
+		==========================
+		== BEGIN HEADER CONTENT ==
+		==========================
+		-->
+	<header id="main-header" class="the-header the-origin-header">
+
+		<div class="container">
+			<div class="row">
+
+				<div class="col-lg-12">
+
+					<a href="#0" class="logo"><img src="images/rosybot_red.png"
+						alt="Rosybot Logo" style='height: 15%; width: 15%'></a>
+					<!-- Your Logo -->
+
+					<!-- 						<a href="#0" id="nav-menu-trigger" class="menu-toggle pull-right all-caps">Menu<span class="icon-menu5"></span></a> Menu Toggle -->
+
+				</div>
+				<!--/ .col-lg-12 -->
+
+			</div>
+			<!--/ .row -->
+		</div>
+		<!--/ .container -->
+
+	</header>
+	<!--
+		=========================
+		==/ END HEADER CONTENT ==
+		=========================
+		-->
+
+
+	<!--
+		============================
+		== BEGIN NAV MENU CONTENT ==
+		============================
+		-->
+	
+	<!--
+		===========================
+		==/ END NAV MENU CONTENT ==
+		===========================
+		-->
+
+
+	<!--
+		========================
+		== BEGIN MAIN CONTENT ==
+		========================
+		-->
+	<main id="main-content" class="hero-subscribe-layout"
+		style="margin-bottom: 234px;"> <!-- margin value is the height of your footer -->
+
+	<!--
+			========================
+			== BEGIN HERO SECTION ==
+			========================
+			-->
+	<section id="hero" data-stellar-background-ratio="0.5"
+		data-stellar-vertical-offset="0">
+
+		<div class="container">
+
+			<div class="vertical-center-wrapper">
+				<div class="vertical-center-table">
+					<div class="vertical-center-content">
+
+						<!-- BEGIN Hero Content -->
+						<div class="hero-content row centered">
+							<div class="col-lg-12">
+							
+								<p class="lead all-caps text-shadow-small"
+									data-sr="enter top over 2s and move 50px wait 0.4s">Hi,
+									Rosy is coming soon!</p>
+
+								<h1 class="all-caps text-shadow-medium"
+									data-sr="enter top over 2s and move 50px wait 0.3s"
+									id=welcomeMessage></h1>
+
+								<!-- BEGIN Hero Subscribe -->
+								<div class="row">
+									<div
+										class="hero-subscribe-wrapper col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
+
+										<form id="rosy_custobmer_subscribe_form"
+											class="the-subscribe-form"
+											data-sr="enter bottom over .5s and move 10px wait 0.3s">
+
+											<div class="input-group">
+												<input id="customerPhone" type="tel" class="form-control" placeholder="Phone #" onchange="changePhoneNumber(this)">
+												<span class="input-group-btn">
+													<button style="background-color: #E3706F;"
+														class="btn btn-subscribe"
+														id="rosy_customer_subscribe_button" type="submit">Text
+														Me</button>
+												</span>
+											</div>
+											<!--/ .input-group -->
+
+										</form>
+										<!--/ #hero-subscribe -->
+
+										<small class="helper-text"
+											data-sr="enter bottom over .5s and move 50px wait 0.3s">
+											<em>Don't worry we never share your phone number and you
+												can always text STOP to unsubscribe.</em>
+										</small>
+
+									</div>
+									<!--/ .hero-subscribe-wrapper -->
+								</div>
+								<!--/ .row -->
+								<!--/ End Hero Subscribe -->
+
+							</div>
+							<!--/ .col-lg-12 -->
+						</div>
+						<!--/ .row -->
+						<!-- END Hero Content -->
+
+					</div>
+					<!--/ .vertical-center-content -->
+				</div>
+				<!--/ .vertical-center-table -->
+			</div>
+			<!-- / .vertical-center-wrapper -->
+
+		</div>
+		<!--/ .container -->
+
+	</section>
+	<!--
+			=======================
+			==/ END HERO SECTION ==
+			=======================
+			--> <!--
+			===============================
+			== BEGIN TOP CLIENT SECTION  ==
+			===============================
+			--> </main>
+	<!--/ #main-content -->
+	<!--
+		=======================
+		==/ END MAIN CONTENT ==
+		=======================
+		-->
+
+	<!--
+		==========================
+		== BEGIN FOOTER CONTENT ==
+		==========================
+		-->
+	<footer id="main-footer">
+
+		<div class="container">
+			
+			<div class="row">
+				<div
+					class="hero-subscribe-wrapper col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1" style="margin-bottom:0px">
+
+					<p class="section-title">With Rosy, you will never forget the roses.</p>
+
+					<p class="section-title"><a style="color: #E3706F;" href="mailto:support@rosybot.com?subject=rosybot.com inquiry">Email support@rosybot.com with any questions.</a>
+				</p>
+				</div>
+
+
+				<!-- 		<ul class="footer-nav all-caps">
+						<li><a href="#about">About</a></li>
+						<li><a href="#contact">Contact</a></li>
+					</ul> / .footer-nav -->
+
+				<!-- 	<ul class="footer-social">
+						<li><a href="#0"><span class="icon-facebook-with-circle"></span></a></li>
+						<li><a href="#0"><span class="icon-twitter-with-circle"></span></a></li>
+						<li><a href="#0"><span class="icon-linkedin-with-circle"></span></a></li>
+						<li><a href="#0"><span class="icon-instagram-with-circle"></span></a></li>
+						<li><a href="#0"><span class="icon-google-with-circle"></span></a></li>
+						<li><a href="#0"><span class="icon-dribbble-with-circle"></span></a></li>
+						<li><a href="#0"><span class="icon-pinterest-with-circle"></span></a></li>
+						<li><a href="#0"><span class="icon-vimeo-with-circle"></span></a></li>
+					</ul> / .footer-social -->
+
+				<div class="copyright">
+
+					<p>Copyright 2017 Rosybot, LLC - All rights reserved.</p>
+
+					<!-- BEGIN language popover -->
+					<!-- 		<div class="language">
+							<span class="icon-globe"></span>
+							<a tabindex="0"
+								role="button"
+								data-toggle="popover"
+								data-trigger="focus"
+								data-html="true"
+								data-placement="top"
+								data-content="
+									<ul class='language-selection'>
+										<li><a href='#'>Bahasa Indonesia</a></li>
+										<li><a href='#'>Dansk</a></li>
+										<li><a href='#'>Deutsch</a></li>
+										<li><a href='#'>Espanol</a></li>
+										<li><a href='#'>Francais</a></li>
+										<li><a href='#'>ภาษาไทย</a></li>
+										<li><a href='#'>日本語</a></li>
+									</ul>"
+							>English (US) <span class="icon-chevron-small-up"></span></a>
+						</div> / .language -->
+					<!-- END language popover -->
+
+				</div>
+				<!--/ .copyright -->
+
+			</div>
+			<!--/ .row -->
+		</div>
+		<!--/ .container -->
+
+	</footer>
+	<!--
+		=========================
+		==/ END FOOTER CONTENT ==
+		=========================
+		-->
+
+
+
+
+
+	<!--
+		======================================
+		== BEGIN FORM NOTIFICATIONS CONTENT ==
+		======================================
+		-->
+	<!-- BEGIN Subscribe Form Alert/Notification -->
+	<div id="subscribe-error-notification" class="notif-box">
+		<span class="icon-bullhorn notif-icon"></span>
+		<p>Oops, Rosy had a problem. Please try again later.</p>
+		<a class="notification-close">Close</a>
+	</div>
+	<!--/ #error-notification -->
+
+	<div id="subscribe-success-notification" class="notif-box">
+		<span class="icon-checkmark notif-icon"></span>
+		<p>You're now subscribed, you will receive a text from Rosy when
+			we launch!</p>
+		<a class="notification-close">Close</a>
+	</div>
+	<!--/ #success-notification -->
+	<!-- END Subscribe Form Alert/Notifications -->
+
+
+
+	<!-- END Contact Form Alert/Notifications -->
+	<!--
+		=====================================
+		==/ END FORM NOTIFICATIONS CONTENT ==
+		=====================================
+		-->
+
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+<!-- 	<!-- SmoothScroll --> 
+<!-- 	<script src="js/minified/SmoothScroll.min.js"></script> -->
+
+<!-- 	<!-- Classie --> 
+<!-- 	<script src="js/minified/classie.min.js"></script> -->
+
+<!-- 	<!-- One Page Nav --> 
+<!-- 	<script src="js/minified/jquery.nav.min.js"></script> -->
+
+<!-- 	<!-- AjaxChimp --> 
+<!-- 	<script src="js/minified/jquery.ajaxchimp.min.js"></script> -->
+
+<!-- 	<!-- Swipebox --> 
+<!-- 	<script src="js/minified/jquery.swipebox.min.js"></script> -->
+
+<!-- 	<!-- Expandable Gallery on 2 Block Column --> 
+<!-- 	<script src="js/minified/expandableGallery.min.js"></script> -->
+
+<!-- 	<!-- Counter Up --> 
+<!-- 	<script -->
+<!-- 		src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script> -->
+<!-- 	<script src="js/minified/jquery.counterup.min.js"></script> -->
+
+	<!-- Isotope JS -->
+<!-- 	<script -->
+<!-- 		src="https://npmcdn.com/isotope-layout@3.0/dist/isotope.pkgd.min.js"></script> -->
+<!--  	<script src="js/urip-isotope-setting.js"></script>  -->
+
+	<!-- Headhesive -->
+	<script src="js/minified/headhesive.min.js"></script>
+
+	<!-- ScrollReveal -->
+	<script src="js/minified/scrollReveal.min.js"></script> 
+
+	<!-- Stellar JS -->
+	<script src="js/jquery.stellar.js"></script>
+
+	<!-- Custom JS -->
+	<script src="js/urip-v2.js"></script>
+
+	<!-- Expandable Navigation Menu -->
+	<script src="js/minified/expandableNav.min.js"></script>
+
+
+
+
+	<!-- ROSYBOT index.js -->
+	<script src="js/index.js"></script>
+
+
+
+
+
+</body>
+</html>

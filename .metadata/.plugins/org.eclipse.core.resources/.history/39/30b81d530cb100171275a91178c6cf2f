@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+<title>Rosybot Pay With Card</title>
+<link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+<link href="normalize.css" rel="stylesheet">
+<link href="rosystripe.css" rel="stylesheet">
+<script src="https://js.stripe.com/v3/" type="text/javascript"></script>
+</head>
+<body>
+<div class="container">
+	<div class="logo-div">
+	<img height=60px width=60px src="rosybot_red.png">
+	</div> 
+<div id="confirmMessage"></div>
+      <form id="cardPaymentForm" action="">
+		<div class="group">
+			<label> <span>Name</span> <input name="cardholder-name"
+				class="field" placeholder="Jane Doe" />
+			</label> <label> <span>Phone</span> <input class="field"
+				placeholder="(123) 456-7890" type="tel" />
+			</label>
+		</div>
+	  <div class="group">
+	  <label> <span>Card</span>
+      <div id="card-element" class="field">
+      </div>
+   </label>
+  	</div>
+<div id="rosyClicableArea">
+		<button class="full" id="payButton" type="submit">Pay $</button>
+		</div>
+		<div class="outcome">
+			<div class="error" role="alert"></div>
+			<div class="success">
+				Success.  You will receive a text confirmation shortly<span></span>
+			</div>
+		</div>
+	</form>
+	  
+</div>
+		<!-- jQuery -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="js/payment.js"></script>
+</body>
+
+<div id="rosySpinnerOverlay" class="modal"></div>
+</html>

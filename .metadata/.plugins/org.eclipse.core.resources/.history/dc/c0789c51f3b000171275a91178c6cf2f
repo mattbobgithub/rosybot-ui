@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+<title>Checkout</title>
+<link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+<link href="normalize.css" rel="stylesheet">
+<link href="index.css" rel="stylesheet">
+<script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+	<div class="logo"></div>
+	<div class="container">
+	<div class="confirm-message" id="confirmMessage1"></div>
+
+
+
+
+
+	</div>
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script type="text/javascript" src="js/cart.js"></script>
+</body>
+
+<div id="rosySpinnerOverlay" class="modal"></div>
+</html>

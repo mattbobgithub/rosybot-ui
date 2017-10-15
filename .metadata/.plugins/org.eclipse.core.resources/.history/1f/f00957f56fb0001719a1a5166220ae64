@@ -1,0 +1,454 @@
+/**
+ * intiate the cart with the order from the api
+ */
+
+$body = $("body");
+
+$(document).on({
+	ajaxStart : function() {
+		$body.addClass("loading");
+	},
+	ajaxStop : function() {
+		$body.removeClass("loading");
+	}
+});
+
+$(document)
+		.ready(
+				function() {
+
+					$('#confirmMessage1').hide();
+					$('#confirmMessage2').hide();
+					$body.addClass("loading");
+					orderId = getURLParameter("ro");
+					console.log(orderId);
+					var postData1 = new Object();
+					postData1.id = orderId;
+					postData2 = JSON.stringify(postData1);
+					
+					$('#paymentDiv').show();
+					$('#updateOrderDiv').hide();
+
+					$
+							.ajax({
+								type : 'POST',
+								url : 'https://tn59sjpc9c.execute-api.us-east-1.amazonaws.com/dev/api/rosyorder',
+								data : postData2,
+								success : function(data) {
+
+									console.log(data);
+
+									jsonData = JSON.parse(data);
+
+									if(!jsonData.validAddress){
+
+										console.log("invalid address");
+										
+										showConfirmMessage('INVALID DELIVERY ADDRESS, PLEASE CORRECT.');
+
+
+	}
+									
+									loadRosyOrderData(jsonData);
+													
+
+									// if order is paid, display paid
+									// confirmation
+									if (jsonData.rosyOrderStatus == 'PAID'
+											|| jsonData.rosyOrderStatus == 'FULFILLED') {
+										
+										showConfirmMessage('THANKS! YOUR ORDER # is '
+												+ jsonData.rosyOrderId
+												+ '. YOU WILL RECEIVE A TEXT CONFIRMATION SHORTLY');
+
+
+										var form = document
+												.getElementById("rosyOrder");
+										var elements = form.elements;
+										for (var i = 0, len = elements.length; i < len; ++i) {
+											elements[i].readOnly = true;
+											elements[i].disabled = true;
+										}
+										
+										$('#rosyClickableArea').hide();
+									}
+
+								},
+								error : function(response) {
+
+									// Handle error
+							showConfirmMessage('ROSY HAD A PROBLEM RETRIEVING YOUR ORDER, PLEASE TRY AGAIN.');
+							
+			
+									var form = document
+											.getElementById("rosyOrder");
+									var elements = form.elements;
+									for (var i = 0, len = elements.length; i < len; ++i) {
+										elements[i].readOnly = true;
+										elements[i].disabled = true;
+									}
+									$('#rosyClickableArea').hide();
+									$('#paymentDiv').hide();
+									$('#updateOrderDiv').hide();
+
+								},
+								contentType : "application/json",
+								dataType : 'json'
+							});
+
+				});
+
+
+$( "#rosyOrder" ).submit(function( event ) {
+	// alert( "Handler for .submit() called." );
+	  event.preventDefault();
+	  updateRosyOrder();
+	});
+
+
+function showConfirmMessage(messageText){
+	$('#confirmMessage1').show();
+	$('#confirmMessage1')
+			.text(messageText);
+	$('#confirmMessage2').show();
+	$('#confirmMessage2')
+			.text(messageText);
+}
+
+function changeRosyOrder(allowEdit) {
+	// hide paypal button, display update order button
+	if(allowEdit){
+	console.log("hide stripe button, show update order button.");
+	$('#paymentDiv').hide();
+	$('#updateOrderDiv').show();
+	}else{
+		console.log("hide update button, show stripte button.");
+		$('#paymentDiv').show();
+		$('#updateOrderDiv').hide();
+	}
+
+	
+
+}
+
+function changeDeliveryDate() {
+
+	// validate new delivery date.
+	console.log("validate new delivery date.");
+	
+	changeRosyOrder(true);
+}
+
+function changeRecipientPhone(value){
+
+	document.forms['rosyOrder'].elements['recipientPhone'].value = formatPhoneNumber(value);
+
+	changeRosyOrder(true);
+	
+}
+
+function changeCustomerPhone(value){
+
+	document.forms['rosyOrder'].elements['customerPhone'].value = formatPhoneNumber(value);
+
+	changeRosyOrder(true);
+	
+}
+
+function formatPhoneNumber(s) {
+  var s2 = (""+s).replace(/\D/g, '');
+	  var output;
+	  if(s2.length>=10){
+		s2 = s2.substr(0,10);
+	  var m = s2.match(/^(\d{3})(\d{3})(\d{4})$/);
+	  output = m[1] + "-" + m[2] + "-" + m[3];
+	  }else{
+		  output = s;
+	  }
+
+	   return output;
+	}
+
+
+function loadRosyOrderData(rod) {
+	console.log(rod);
+
+	var allowEdit = false;
+	if (rod.customerFullName === null) {
+		allowEdit=true;
+	} else {
+		document.forms['rosyOrder'].elements['customerFullName'].value = rod.customerFullName;
+	}
+	if (rod.customerPhone === null) {
+		allowEdit=true;
+	} else {
+		var displayPhone = convertPhoneForDisplay(rod.customerPhone);
+		document.forms['rosyOrder'].elements['customerPhone'].value = displayPhone;
+	}
+
+	if (rod.deliveryDate === null) {
+		allowEdit=true;
+	} else {
+
+		var displayDate = convertDateForDisplay(rod.deliveryDate);
+		document.forms['rosyOrder'].elements['deliveryDate'].value = displayDate;
+	}
+	if (rod.recipientCity === null) {
+		allowEdit=true;
+	} else {
+		document.forms['rosyOrder'].elements['recipientCity'].value = rod.recipientCity;
+	}
+	if (rod.recipientCountry === null) {
+		allowEdit=true;
+	} else {
+		document.forms['rosyOrder'].elements['recipientCountry'].value = rod.recipientCountry;
+	}
+	if (rod.recipientFullName === null) {
+		allowEdit=true;
+	} else {
+		document.forms['rosyOrder'].elements['recipientFullName'].value = rod.recipientFullName;
+	}
+	if (rod.recipientPhone === null) {
+		allowEdit=true;
+	} else {
+		var displayPhoneRecip = convertPhoneForDisplay(rod.recipientPhone);
+		document.forms['rosyOrder'].elements['recipientPhone'].value = displayPhoneRecip;
+	}
+	if (rod.recipientPostalCode === null) {
+		allowEdit=true;
+	} else {
+		document.forms['rosyOrder'].elements['recipientPostalCode'].value = rod.recipientPostalCode;
+	}
+	if (rod.recipientState === null) {
+		allowEdit=true;
+	} else {
+		document.forms['rosyOrder'].elements['recipientState'].value = rod.recipientState;
+	}
+	if (rod.recipientStreetAddress1 === null) {
+		allowEdit=true;
+	} else {
+		document.forms['rosyOrder'].elements['recipientStreetAddress1'].value = rod.recipientStreetAddress1;
+	}
+
+if(!rod.validAddress){
+	allowEdit = true;
+}
+	
+		changeRosyOrder(allowEdit);
+	
+// autopopulated or non-required fields
+	document.forms['rosyOrder'].elements['id'].value = rod.id;
+		
+	document.forms['rosyOrder'].elements['cardMessage'].value = rod.cardMessage;
+	document.forms['rosyOrder'].elements['customerEmail'].value = rod.customerEmail;
+	document.forms['rosyOrder'].elements['recipientStreetAddress2'].value = rod.recipientStreetAddress2;
+	document.getElementById("rosyOrderImage").src = rod.productImageUrl;
+	document.getElementById("productName").textContent = rod.productName;
+	document.getElementById("productCode").textContent = 'Rosy Product Code - '
+			+ rod.productCode;
+	document.getElementById("orderTotal").textContent = "$ " + rod.orderTotal;
+	document.forms['rosyOrder'].elements['specialInstructions'].value = rod.specialInstructions;
+	document.forms['rosyOrder'].elements['validAddress'].value = rod.validAddress;
+	
+
+	doStripe(rod.orderTotal);
+}
+
+function updateRosyOrder() {
+
+	var arrayInput = $('#rosyOrder').serializeArray();
+	var postData1 = objectifyForm(arrayInput);
+	var outputDate = convertDateForSave(postData1.deliveryDate);
+	postData1.deliveryDate = outputDate;
+	var outputPhone = convertPhoneForSave(postData1.customerPhone);
+	postData1.customerPhone = outputPhone;
+	$('#confirmMessage1').hide();
+	$('#confirmMessage2').hide();
+	postData2 = JSON.stringify(postData1);
+	$
+			.ajax({
+				type : 'POST',
+				url : 'https://tn59sjpc9c.execute-api.us-east-1.amazonaws.com/dev/api/rosyorder',
+				data : postData2, // or JSON.stringify ({name:
+				// 'jonas'}),
+				success : function(data) {
+					console.log(data);
+					if(data.errorMessage!=null){
+						console.log('ERROR on update call:');
+						
+						showConfirmMessage('ROSY HAD A PROBLEM UPDATING YOUR ORDER, PLEASE TRY AGAIN.');
+
+					}else{
+					jsonData = JSON.parse(data);
+					// reload order data from response of
+					// updated order
+					console.log(jsonData);
+					console.log("VALID ADDY:" + jsonData.validAddress)
+					if(!jsonData.validAddress){
+						console.log("invalid address" + jsonData.validAddress);
+						
+						showConfirmMessage('INVALID DELIVERY ADDRESS, PLEASE CORRECT.');
+
+					}
+					
+					loadRosyOrderData(jsonData);
+					}
+
+					
+				},
+				error : function(response) {
+					console.log('ERROR on update call:');
+					// Handle error
+
+					showConfirmMessage('ROSY HAD A PROBLEM UPDATING YOUR ORDER, PLEASE TRY AGAIN.');
+		
+				},
+				contentType : "application/json",
+				dataType : 'json'
+			});
+}
+
+Array.prototype.move = function(from, to) {
+	this.splice(to, 0, this.splice(from, 1)[0]);
+};
+
+function objectifyForm(formArray) {// serialize data function
+
+	var returnArray = {};
+	for (var i = 0; i < formArray.length; i++) {
+
+		// find delivery date
+		returnArray[formArray[i]['name']] = formArray[i]['value'];
+	}
+	return returnArray;
+}
+
+function getURLParameter(name) {
+	return decodeURIComponent((new RegExp('[?|&]' + name + '='
+			+ '([^&;]+?)(&|#|;|$)').exec(location.search) || [ null, '' ])[1]
+			.replace(/\+/g, '%20'))
+			|| null;
+}
+
+function convertDateForDisplay(dateStr_MM_DD_YYYY) {
+	var dateArray = dateStr_MM_DD_YYYY.split("-");
+	var mm = dateArray[0];
+	var dd = dateArray[1];
+	var yyyy = dateArray[2];
+	return yyyy + "-" + mm + "-" + dd;
+}
+
+function convertDateForSave(dateStr_YYYY_MM_DD) {
+	var dateArray = dateStr_YYYY_MM_DD.split("-");
+	var yyyy = dateArray[0];
+	var mm = dateArray[1];
+	var dd = dateArray[2];
+	return mm + "-" + dd + "-" + yyyy;
+}
+
+function convertPhoneForDisplay(phone) {
+	if (phone.charAt(0) === '1') {
+		phone = phone.substr(1);
+	}
+	return phone.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
+}
+
+function convertPhoneForSave(phone) {
+	phone = phone.replace(/\D/g, '')
+
+	return phone;
+}
+
+
+function openPaymentModal(){
+	
+	var url = document.URL;
+    shortUrl=url.substring(0,url.lastIndexOf("/"));
+	
+location= shortUrl + "/payment.html?ro=" + getURLParameter("ro");
+	
+}
+
+
+
+
+function doStripe(ordTot){
+
+// added for stripe payment request button
+var stripe = Stripe('pk_test_W2fKI1ypiVB8Lk8jH6Rv2bWY');
+var elements = stripe.elements();
+
+console.log("do stripe ordTot:" + ordTot);
+paymentRequest = stripe.paymentRequest({
+	  country: 'US',
+	  currency: 'usd',
+	  total: {
+	    label: 'Rosy Order:',
+	    amount: ordTot * 100
+	  },
+	});
+
+
+
+
+var prButton = elements.create('paymentRequestButton', {
+	  paymentRequest: paymentRequest,
+	  style: {
+		    paymentRequestButton: {
+		      type: 'buy', // default: 'default'
+		      theme: 'dark' , // default: 'dark'
+		      height: '64px' // default: '40px', the width is always '100%'
+		    },
+		  },
+	});
+
+
+// Check the availability of the Payment Request API first.
+paymentRequest.canMakePayment().then(function(result) {
+	
+  if (result.applePay) {
+	  $('#payment-request-button').show();
+
+	    document.getElementById('payment-request-button').style.display = 'block';
+	    prButton.mount('#payment-request-button');    
+    
+  } else {
+	    document.getElementById('payment-request-button').style.display = 'hide';
+	  console.log("no apple/android pay");  
+    
+  }
+  
+});	
+
+
+paymentRequest.on('token', function(ev) {
+
+	   apiUrl= "https://h83jr170h1.execute-api.us-east-1.amazonaws.com/stripeDevApi/api/rosyorder";
+	   rOrder = getURLParameter("ro");
+	  // Send the token to your server to charge it!
+	  fetch(apiUrl, {
+	    method: 'POST',
+	    body: JSON.stringify({ro: rOrder, tok: ev.token.id})
+	  })
+	  .then(function() {
+	    // Report to the browser that the payment was successful, prompting it
+	    // to close the browser payment interface.
+	    ev.complete('success');
+
+	    var url = document.URL;
+        shortUrl=url.substring(0,url.lastIndexOf("/"));
+    	
+        location = shortUrl + "/checkout.html?ro=" + getURLParameter("ro");
+    
+	  })
+	  .catch( function() {
+		    // Report to the browser that the payment failed, prompting it to
+		    // re-show the payment interface, or show an error message and close
+		    // the payment interface.
+		    ev.complete('fail');
+		  }
+	  );
+	});
+
+
+}

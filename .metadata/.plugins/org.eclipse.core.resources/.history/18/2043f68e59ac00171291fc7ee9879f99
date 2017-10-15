@@ -1,0 +1,149 @@
+/**
+ * intiate the cart with the order from the api
+ */
+stripe = Stripe('pk_test_W2fKI1ypiVB8Lk8jH6Rv2bWY');
+elements = stripe.elements();
+
+$(document)
+		.ready(
+				function() {
+
+					$('#confirmMessage').hide();
+
+					orderId = getURLParameter("ro");
+					console.log(orderId);
+					var postData1 = new Object();
+					postData1.id = orderId;
+					postData2 = JSON.stringify(postData1);
+					
+
+					$
+							.ajax({
+								type : 'POST',
+								url : 'https://tn59sjpc9c.execute-api.us-east-1.amazonaws.com/dev/api/rosyorder',
+								data : postData2,
+								success : function(data) {
+
+									console.log(data);
+
+									jsonData = JSON.parse(data);
+						ordTot = jsonData.orderTotal;
+						paymentRequest = stripe.paymentRequest({
+							  country: 'US',
+							  currency: 'usd',
+							  total: {
+							    label: 'Rosy Order total',
+							    amount: ordTot  * 100,
+							  },
+							});
+									// if order is paid, display paid send back
+									// to confirmation and black all fields
+								
+// if (jsonData.rosyOrderStatus == 'PAID') {
+// var form = document
+// .getElementById("cardPaymentForm");
+// var elements = form.elements;
+// for (var i = 0, len = elements.length; i < len; ++i) {
+// elements[i].readOnly = true;
+// elements[i].disabled = true;
+// }
+// }
+									
+						
+
+														
+
+										},
+										error : function(response) {
+
+											// Handle error
+											$('#confirmMessage').show();
+											$('#confirmMessage')
+													.text(
+															'ROSY HAD A PROBLEM RETRIEVING YOUR ORDER, PLEASE TRY AGAIN.');
+									
+								
+
+										},
+										contentType : "application/json",
+										dataType : 'json'
+									});
+							
+
+								
+
+				});
+
+
+
+
+
+function getURLParameter(name) {
+	return decodeURIComponent((new RegExp('[?|&]' + name + '='
+			+ '([^&;]+?)(&|#|;|$)').exec(location.search) || [ null, '' ])[1]
+			.replace(/\+/g, '%20'))
+			|| null;
+}
+
+
+
+console.log(ordTot);
+console.log(ordTot*100);
+console.log(paymentRequest);
+
+var prButton = elements.create('paymentRequestButton', {
+	  paymentRequest: paymentRequest,
+	});
+
+
+// Check the availability of the Payment Request API first.
+paymentRequest.canMakePayment().then(function(result) {
+
+	
+	
+  if (result.applePay) {
+console.log(result.applePay);
+    prButton.mount('#payment-request-button');
+  } else {
+
+    document.getElementById('payment-request-button').style.display = 'none';
+    // if not present, just display card charge page
+
+    
+
+    
+    
+    
+  }
+});	
+
+
+paymentRequest.on('token', function(ev) {
+
+	   apiUrl= "https://h83jr170h1.execute-api.us-east-1.amazonaws.com/stripeDevApi/api/rosyorder";
+	   rOrder = getURLParameter("ro");
+	  // Send the token to your server to charge it!
+	  fetch(apiUrl, {
+	    method: 'POST',
+	    body: JSON.stringify({ro: rOrder, tok: ev.token.id})
+	  })
+	  .then(function() {
+	    // Report to the browser that the payment was successful, prompting it
+	    // to close the browser payment interface.
+	    ev.complete('success');
+	  })
+	  .catch( function() {
+		    // Report to the browser that the payment failed, prompting it to
+		    // re-show the payment interface, or show an error message and close
+		    // the payment interface.
+		    ev.complete('fail');
+		  }
+	  );
+	});
+
+/**
+ * http://usejsdoc.org/
+ */
+/**
+ * http://usejsdoc.org/
+ */

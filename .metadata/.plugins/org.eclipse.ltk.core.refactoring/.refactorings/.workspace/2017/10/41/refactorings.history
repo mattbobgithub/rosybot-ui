@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete resource &apos;rosybot-ui/dist/rstripe.css&apos;" deleteContents="false" description="Delete resource &apos;rosybot-ui/dist/rstripe.css&apos;" element1="/rosybot-ui/dist/rstripe.css" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1508004266967"/>
+</session>
